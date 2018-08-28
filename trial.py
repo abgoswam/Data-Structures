@@ -1,11 +1,14 @@
 import sys
+import pandas as pd
+import numpy as np
 
-a = 10
+def get_metrics(output_scores = False):
+    overall_metrics = 0.5
+    scores = pd.DataFrame() # empty dataframe
+    if output_scores:
+        scores = pd.DataFrame(np.random.randn(50, 4))
 
-def f():
-    global a
-    a = max(a, 20)
-    print(a)
+    return overall_metrics, scores
 
 
 if __name__ == "__main__":
