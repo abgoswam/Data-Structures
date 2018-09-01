@@ -12,5 +12,4 @@ def get_metrics(output_scores = False):
 
 
 if __name__ == "__main__":
-    f()
     print(a)
