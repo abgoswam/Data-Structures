@@ -1,8 +1,8 @@
 # python3
 import numpy as np
 
-p = 37
-x = 31
+p = 101
+d = {}
     
 def read_input():
     return (input().rstrip(), input().rstrip())
@@ -11,9 +11,14 @@ def print_occurrences(output):
     print(' '.join(map(str, output)))
 
 def poly_hash(s):
+    if s in d:
+        return d[s]
+    
     ans = 0
     for c in reversed(s):
-        ans = (ans * x + ord(c)) % p
+        ans = (ans + ord(c)) % p
+    
+    d[s] = ans
     return ans
 
 def precompute_hash(text, len_pattern):    
@@ -22,16 +27,17 @@ def precompute_hash(text, len_pattern):
     s = text[len_text-len_pattern:]
     
     h[-1] = poly_hash(s)
-    y = 1
-    for i in range(len_pattern):
-        y = (y * x) % p
         
     for i in range(len(h)-2, -1, -1):
-        a1 = ((x%p) * (h[i+1]%p))%p
-        a2 = ord(text[i])%p
-        a3 = ((y%p) * (ord(text[i + len_pattern])%p))%p
-    
-        h[i] =  (a1 + a2 - a3) % p
+        s_sub = text[i:i+len_pattern]
+        if s_sub in d:
+            h[i] = d[s_sub]
+        else:
+            a1 = h[i+1]%p
+            a2 = ord(text[i])%p
+            a3 = ord(text[i + len_pattern])%p
+            h[i] =  (a1 + a2 - a3) % p
+            d[s_sub] = h[i]
 
     return h                
 
