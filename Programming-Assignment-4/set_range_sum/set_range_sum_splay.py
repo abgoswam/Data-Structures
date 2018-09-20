@@ -126,39 +126,68 @@ def merge(left, right):
 
 
 # Code that uses splay tree to solve the problem
-
 root = None
 
-
 def insert(x):
+    # print(">>>> Insert")
     global root
     (left, right) = split(root, x)
     new_vertex = None
     if right == None or right.key != x:
         new_vertex = Vertex(x, x, None, None, None)
     root = merge(merge(left, new_vertex), right)
+    # show(root)
 
 
 def erase(x):
+    # print(">>>> Erase")
     global root
     # Implement erase yourself
-    pass
+    (result, root) = find(root, x)
+    if result is None:
+        return
+    if result.key != x:
+        return
+    (left, right) = split(root, x)
+
+    right = right.right
+    if right is not None:
+        right.parent = None
+
+    root = merge(left, right)
 
 
 def search(x):
+    # print(">>>> Search")
     global root
     # Implement find yourself
 
-    return False
+    (result, root) = find(root, x)
+    if result is None:
+        return False
 
+    return result.key == x
+
+# def show(v):
+#     if v is None:
+#         return
+#
+#     show(v.left)
+#     # print("++ {0} ++".format(v.key))
+#     show(v.right)
 
 def sum(fr, to):
+    # print(">>>> Sum")
     global root
     (left, middle) = split(root, fr)
     (middle, right) = split(middle, to + 1)
     ans = 0
     # Complete the implementation of sum
+    # show(middle)
+    if middle is not None:
+        ans = middle.sum
 
+    root = merge(merge(left, middle), right)
     return ans
 
 

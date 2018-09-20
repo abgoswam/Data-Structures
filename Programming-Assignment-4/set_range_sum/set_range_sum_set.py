@@ -5,20 +5,27 @@ from sys import stdin
 _set = set()
 
 def insert(x):
+    # print(">>>> Insert")
     _set.add(x)
+    # for item in _set:
+    #     print("---{0}---".format(item))
 
 def erase(x):
+    # print(">>>> Erase")
     if x in _set:
         _set.remove(x)
 
 def search(x):
+    # print(">>>> Search")
     return True if x in _set else False
 
 
 def sum(fr, to):
+    # print(">>>> Sum")
     ans = 0
     for item in _set:
         if fr <= item <= to:
+            # print("-- {0} --".format(item))
             ans += item
 
     return ans
